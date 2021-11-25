@@ -5,3 +5,5 @@
 ## 容器镜像
 
 jenkins 官方文档推荐使用jenkinsci/blueocean镜像部署jenkins，在对jenkins还不是很熟悉的情况下，我接受了官方的推荐，但是我觉的，如果需要客制化部署的话，还是有必要使用官方仓库的jenkins/jenkins镜像进行尝试。
+
+## 使用LDAP管理用户

@@ -10,6 +10,11 @@
 
 另外一种方式是选择一个专门的身份提供者软件，那个我们就应该要求这个软件支持尽可能多的认证方式。或者选择大多数组件都支持的认证方式，比如LDAP。但这会导致我们必须坚持使用这种陈旧的认证方式。
 
+## 各个组件支持的登录方式
+
+1. Gitea: LDAP(via BindDN)、LDAP(simple auth)、SMTP、OAuth2、SPENEGO with SSPI
+2. Jenkins: Jenkins拥有大量的插件，支持以各种方式登录
+
 ## 值得考虑的Authentication Provider
 
 1. [JOIDS(Java OpenID Server)](https://code.google.com/archive/p/openid-server/)
