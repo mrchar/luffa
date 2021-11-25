@@ -64,3 +64,12 @@ services:
     volumes:
       # - postgres:/var/lib/postgresql/data
       - ./postgres:/var/lib/postgresql/data
+  jenkins:
+    image: jenkinsci/blueocean:1.25.2
+    user: root
+    volumes:
+      - ./jenkins:/var/jenkins_home
+      - /var/rundocker.dock:/var/run/docker.sock
+    ports:
+      - 8080:8080
+      - 50000:50000
