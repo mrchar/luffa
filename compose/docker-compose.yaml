@@ -83,3 +83,9 @@ services:
     ports:
       - 8080:8080
       - 50000:50000
+  nexus:
+    image: sonatype/nexus3:3.37.0
+    volumes:
+      - "./nexus:/nexus-data"
+    ports:
+      - 8081:8081
