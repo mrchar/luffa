@@ -25,6 +25,10 @@
 3. helm
 4. 安装工具
 
+## 快速开始
+
+### 准备工作
+
 ## 更多文档
 
 1. [身份提供者](./docs/AuthenticationProvider.md)

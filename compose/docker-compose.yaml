@@ -5,9 +5,11 @@ services:
     image: osixia/openldap:${OPENLDAP_VERSION}
     restart: always
     environment:
-      - LDAP_ORGANISATION=${ORGANISATION_NAME}
-      - LDAP_DOMAIN=${DOMAIN_NAME}
-      - LDAP_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+      - LDAP_ORGANISATION=${LDAP_ORGANISATION}
+      - LDAP_DOMAIN=${LDAP_DOMAIN}
+      - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
+      - LDAP_CONFIG_PASSWORD=${LDAP_CONFIG_PASSWORD}
+      - LDAP_READONLY_USER=${LDAP_READONLY_USER}
     networks:
       default:
         aliases:

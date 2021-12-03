@@ -26,10 +26,10 @@ openldap的root用户密码在.env文件中进行配置。
 * User search filter 是对用户名进行格式化，默认的表达式为`uid={0}`也就是将用户名写到uid字段；
 * Manager DN 是openldap的管理员地址，jenkins将会使用这个账号跟openldap进行通讯，我们这里使用cn=admin,dc=example,dc=com；
 * Manager Password就是我们在.env中配置的root密码；
-* Display Name LDAP attribute 是显示在jenkins中的用户名，我们这里取cn
+* Display Name LDAP attribute 是显示在jenkins中的用户名，我们这里取uid
 
 然后点击Test LDAP setting进行测试：
 
-首先我们要在openldap中创建用户，可以使用 phpldapadmin 进行操作。添加一个叫做People的ou，然后再ou下面创建一个cn叫username密码为password的联系人。
+首先我们要在openldap中创建用户，可以使用 phpldapadmin 进行操作。添加一个叫做People的ou，然后再ou下面创建一个cn叫username密码为password的Simple Security Object。
 
 回到测试页面，我们就可以使用username和password测试了，查看Jenkins的提示，如果登录成功了，我们就可以使用ldap登录了。
