@@ -23,12 +23,16 @@ services:
     restart: always
     environment:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
+    volumes:
+      - ./phpldapadmin:/var/www/phpldapadmin
     networks:
       default:
         aliases:
           - phpldapadmin
     ports:
       - 6443:443
+    depends_on:
+      - openldap
 
   postgres:
     image: postgres:${POSTGRES_VERSION}
