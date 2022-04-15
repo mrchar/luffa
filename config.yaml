@@ -1,0 +1,9 @@
+# 统一身份认证方式
+auth: openldap
+# 数据库类型
+database: postgres
+
+openldap:
+  org: example
+  domain: example.com
+  adminPassword: adminPassw0rd
