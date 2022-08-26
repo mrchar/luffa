@@ -7,7 +7,7 @@
 | 组件           | 开源方案                       |
 | -------------- | ------------------------------ |
 | 电子邮件       | postfix dovecot rspamd         |
-| 用户中心       | OpenLDAP / freeIPA             |
+| 用户中心       | Casdoor / OpenLDAP / freeIPA   |
 | OAuth2         | Spring Authorization Server    |
 | 项目管理       | Redmine                        |
 | 知识库         | MediaWiki                      |
