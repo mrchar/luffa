@@ -1,6 +1,52 @@
 version: "3"
 
 services:
+  postgres:
+    restart: always
+    image: postgres:${POSTGRES_VERSION}
+    environment:
+      - POSTGRES_USER=luffa
+      - POSTGRES_PASSWORD=luffa_password
+      - POSTGRES_DB=luffa
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    ports:
+     - 5432:5432
+
+  casdoor:
+    restart: always
+    image: casbin/casdoor:${CASDOOR_VERSION}
+    environment:
+      RUNNING_IN_DOCKER: "true"
+    volumes:
+       - ./casdoor/app.conf:/conf/app.conf
+    ports: 
+     - 8000:8000
+    depends_on:
+      - postgres
+
+  gitea:
+    restart: always
+    image: gitea/gitea:${GITEA_VERSION}
+    environment:
+      - USER=git
+      - USER_UID=1000
+      - USER_GID=1000
+      - GITEA__database__DB_TYPE=postgres
+      - GITEA__database__HOST=postgres:5432
+      - GITEA__database__NAME=luffa
+      - GITEA__database__USER=luffa
+      - GITEA__database__PASSWD=luffa_password
+    volumes:
+      - ./gitea:/data
+      - /etc/timezone:/etc/timezone:ro
+      - /etc/localtime:/etc/localtime:ro
+    ports:
+      - "3000:3000"
+      - "222:22"
+    depends_on:
+      - postgres
+
   openldap:
     image: osixia/openldap:${OPENLDAP_VERSION}
     restart: always
@@ -10,16 +56,13 @@ services:
       - LDAP_ADMIN_PASSWORD=${LDAP_ADMIN_PASSWORD}
       - LDAP_CONFIG_PASSWORD=${LDAP_CONFIG_PASSWORD}
       - LDAP_READONLY_USER=${LDAP_READONLY_USER}
-    networks:
-      default:
-        aliases:
-          - openldap
     volumes:
       - ./openldap/config:/etc/ldap/slapd.d
       - ./openldap/data:/var/lib/ldap
     ports:
       - 389:389
       - 636:636
+
   phpldapadmin:
     image: osixia/phpldapadmin:${PHPLDAPADMIN_VERSION}
     restart: always
@@ -27,53 +70,11 @@ services:
       - PHPLDAPADMIN_LDAP_HOSTS=openldap
     volumes:
       - ./phpldapadmin:/var/www/phpldapadmin
-    networks:
-      default:
-        aliases:
-          - phpldapadmin
     ports:
       - 6443:443
     depends_on:
       - openldap
 
-  postgres:
-    image: postgres:${POSTGRES_VERSION}
-    restart: always
-    environment:
-      - POSTGRES_USER=gitea
-      - POSTGRES_PASSWORD=gitea
-      - POSTGRES_DB=gitea
-    networks:
-      default:
-        aliases:
-          - postgres
-    volumes:
-      - ./postgres:/var/lib/postgresql/data
-  gitea:
-    image: gitea/gitea:${GITEA_VERSION}
-    restart: always
-    environment:
-      - USER=git
-      - USER_UID=1000
-      - USER_GID=1000
-      - GITEA__database__DB_TYPE=postgres
-      - GITEA__database__HOST=postgres:5432
-      - GITEA__database__NAME=gitea
-      - GITEA__database__USER=gitea
-      - GITEA__database__PASSWD=gitea
-    networks:
-      default:
-        aliases:
-          - gitea
-    volumes:
-      - ./gitea:/data
-      - /etc/timezone:/etc/timezone:ro
-      - /etc/localtime:/etc/localtime:ro
-    ports:
-      - "3000:3000"
-      - "222:22"
-    depends_on:
-      - db
   jenkins:
     image: jenkinsci/blueocean:${JENKINS_VERSION}
     user: root
@@ -83,6 +84,7 @@ services:
     ports:
       - 8080:8080
       - 50000:50000
+
   nexus:
     image: sonatype/nexus3:3.37.0
     volumes:

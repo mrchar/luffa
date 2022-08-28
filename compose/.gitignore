@@ -1,3 +1,5 @@
+/casdoor/*
+!/casdoor/app.conf
 /openldap
 /phpldapadmin
 /gitea
